@@ -14,6 +14,9 @@
 	</InputSelect>
 	<button type="button" class="btn btn-primary btn-sm" @onclick="OnFilter">Поиск</button>
 	<button type="button" class="btn btn-primary btn-sm" @onclick="ShowModal">Добавить услугу</button>
+	<button type="button" class="btn btn-primary btn-sm" @onclick="ShowChart">Корзина(@orders.Count)</button>
+
+
 </div>
 
 <div class="container" style="display:flex; flex-wrap: wrap;">
@@ -140,6 +143,7 @@
 	private bool isModalShowed;
 	public ServiceInputModel service;
 	private List<OrderInputModel> orders;
+	private bool isChartShowed;
 
 
 	protected override void OnInitialized()
@@ -149,6 +153,7 @@
 		serchText = "";
 		serchType = -1;
 		isModalShowed = false;
+		isChartShowed = false;
 
 		orders = new List<OrderInputModel>();
 	}
@@ -180,6 +185,17 @@
 	{
 		isModalShowed = false;
 	}
+
+	private void ShowChart()
+	{
+		isChartShowed = true;
+	}
+
+	private void HideChart()
+	{
+		isChartShowed = false;
+	}
+
 
 	private void OnSubmit()
 	{
