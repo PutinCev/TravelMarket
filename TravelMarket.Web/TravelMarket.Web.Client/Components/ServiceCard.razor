@@ -51,8 +51,8 @@
     [Parameter]
     public Action<OrderInputModel> OnReservChanged { get; set; }
 
-
-    private int number = 0;
+    [Parameter]
+    public int number { get; set; }
 
     private string nameButton = "Забронировать";
 

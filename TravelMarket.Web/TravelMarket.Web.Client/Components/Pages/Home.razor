@@ -18,10 +18,20 @@
 
 <div class="container" style="display:flex; flex-wrap: wrap;">
 	@foreach (var s in filterServices)
-	{
-		<ServiceCard Service="s" OnReservChanged="HandleReservChange" />
-	}
+		@if (orders.Exists(o=>o.ServiceId==s.Id))
+		{
+			<ServiceCard Service="s" number="orders.First((o => o.ServiceId == s.Id)).Number" OnReservChanged="HandleReservChange" />
+			<p></p>
+		}
+		else
+		{
+			<ServiceCard Service="s" OnReservChanged="HandleReservChange" />
+			<p></p>
+
+		}
+		<p></p>
 </div>
+<p></p>
 
 @foreach(var o in orders)
 {
