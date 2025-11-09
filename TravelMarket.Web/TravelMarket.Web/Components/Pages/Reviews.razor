@@ -1,0 +1,35 @@
+﻿@page "/reviews/{Id:int}"
+@inject ServServise ServServise
+
+
+<style>
+	.my-text {
+		color: #333333;
+		font-family: Arial, sans-serif;
+		font-size: 25px;
+		line-height: 1.5;
+		text-align: left;
+	}
+</style>
+
+    <h1>@service.Name</h1>
+	<h2>ОТЗЫВЫ</h2>
+	<p>		
+       <p class = "my-text">
+			@service.Reviews
+		</p>
+	</p>
+
+
+@code {
+	[Parameter]
+	public int Id { get; set; }
+	ServiceOutputModel service;
+	protected override void OnInitialized()
+	{
+		service = ServServise.GetAll().Where(p => p.Id ==Id).FirstOrDefault();
+		base.OnInitialized();
+	}
+}
+
+

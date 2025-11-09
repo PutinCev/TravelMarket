@@ -1,0 +1,87 @@
+﻿
+<div class="card text-center">
+    <div class="card-header">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Туристическая услуга</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/@Service.Id">Подробное описание</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/TourOperator/@Service.Partner.Id">Туроператор</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/reviews/@Service.Id">Отзывы</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/payment/@Service.Partner.Id">Условия оплаты</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="/docs/@Service.Partner.Id" role="button" aria-expanded="false">Документы для туриста</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/reviews/@Service.Id">Договор</a></li>
+                    <li><a class="dropdown-item" href="/TransferVoucher/@Service.Id">Ваучер на трансфер</a></li>
+                    <li><a class="dropdown-item" href="/VoucherForCheckIn/@Service.Id">Ваучер на заселение</a></li>
+                    <li><a class="dropdown-item" href="/reminder/@Service.Id">Памятка туристу</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Переоформить на другого туриста</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled">Написать отзыв</a>
+            </li>
+        </ul>
+        <div class="card-body">
+            <h5 class="card-title">@Service.Name</h5>
+            <p class="card-text">@Service.TypeOfSevice.ToString() - @Service.Partner.Name -  @Service.Cost p.</p>
+            <p>
+                <img src=@Service.Img alt="Описание изображения" width="100" height="100">
+            </p>
+            <a class="btn btn-primary" @onclick="OnReserv">@nameButton </a>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public ServiceOutputModel Service{ get; set; }
+
+    [Parameter]
+    public Action<OrderInputModel> OnReservChanged { get; set; }
+
+
+    private int number = 0;
+
+    private string nameButton = "Забронировать";
+
+    private void OnReserv()
+    {
+        if (number == 0)
+        {
+            number = 1;
+            nameButton = "Отменить бронь";
+        }
+        else
+        {
+            number = 0;
+            nameButton = "Забронировать";
+        }
+        var tmp = new OrderInputModel()
+        {
+            Number=number,
+            ServiceId=Service.Id,
+            ServiceName = Service.Name,
+            ServiceCost = Service.Cost,
+        };
+        OnReservChanged(tmp);
+    }
+
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+    }
+
+}

@@ -1,0 +1,48 @@
+﻿@page "/docs/{Id:int}"
+@inject PartnerServise PartnerServise
+<style>
+	.my-text {
+		color: #333333;
+		font-family: Arial, sans-serif;
+		font-size: 25px;
+		line-height: 1.5;
+		text-align: left;
+	}
+</style>
+<ul class="nav nav-pills">
+    <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="/docs/@partner.Id">Договор</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" aria-current="page" href="/docs/TransportationVoucher/@partner.Id">Ваучер на трансфер</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/docs/AccommodationVoucher/@partner.Id">Ваучер на заселение</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/docs/reminder/@partner.Id">Памятка туристу</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/docs/payment/@partner.Id">Условия оплаты</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link disabled">Переоформить на другого туриста</a>
+    </li>
+</ul>
+<p class="my-text">
+        @partner.Agreement
+</p>
+@code {
+	[Parameter]
+	public int Id { get; set; }
+	PartnerOutputModel partner;
+	protected override void OnInitialized()
+	{
+		partner = PartnerServise.GetAll().Where(p => p.Id == Id).FirstOrDefault();
+		base.OnInitialized();
+	}
+}
+
+
+
+

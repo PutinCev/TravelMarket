@@ -1,0 +1,208 @@
+﻿@page "/"
+@rendermode InteractiveServer
+<PageTitle>Home</PageTitle>
+<div class="container" style="margin:15px;">
+	<InputText @bind-Value="serchText"> </InputText>
+	<InputSelect @bind-Value="serchType">
+		<option value=-1>Всё</option>"
+		<option value="@((int)ServiceType.Sightseeing)">Достопримечательности</option>"
+		<option value="@((int)ServiceType.ComplexTour)">Комплексеый ТУР</option>"
+		<option value="@((int)ServiceType.BusTrip)">Автобусное путешествие</option>"
+		<option value="@((int)ServiceType.Accommodation)">Отели</option>"
+		<option value="@((int)ServiceType.Flight)">Перелет на самолете</option"
+		<option value="@((int)ServiceType.TrainTrip)">Путешествие на поезде</option>"
+	</InputSelect>
+	<button type="button" class="btn btn-primary btn-sm" @onclick="OnFilter">Поиск</button>
+	<button type="button" class="btn btn-primary btn-sm" @onclick="ShowModal">Добавить услугу</button>
+</div>
+
+<div class="container" style="display:flex; flex-wrap: wrap;">
+	@foreach (var s in filterServices)
+	{
+		<ServiceCard Service="s" OnReservChanged="HandleReservChange" />
+	}
+</div>
+
+@foreach(var o in orders)
+{
+	<p>@o.ServiceName - @o.ServiceCost - @o.Number</p>
+}
+
+@if (isModalShowed)
+{
+	<div class="modal show d-block" style="background: rgba(0,0,0,0.5)">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Добавить услугу</h5>
+					<button type="button" class="btn-close" aria-label="Close" @onclick="HideModal"></button>
+				</div>
+				<EditForm Model="service" OnValidSubmit="OnSubmit">
+					<DataAnnotationsValidator></DataAnnotationsValidator>
+					@* <ValidationSummary></ValidationSummary> *@
+					<div class="modal-body">
+						<div class="row mb-3">
+							<div class="col-sm-3">
+								<span>Название</span>
+							</div>
+							<div class="col-sm-9">
+								<InputText @bind-Value="service.Name"></InputText>
+								<ValidationMessage For="()=>service.Name"/>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<div class="col-sm-3">
+								<span>Описание</span>
+							</div>
+							<div class="col-sm-9">
+
+								<InputTextArea @bind-Value="service.Description"></InputTextArea>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<div class="col-sm-3">
+								<span>Путь к картинке</span>
+							</div>
+							<div class="col-sm-9">
+								<InputText @bind-Value="service.Img"></InputText>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<div class="col-sm-3">
+								<span>Отзывы</span>
+							</div>
+							<div class="col-sm-9">
+								<InputTextArea @bind-Value="service.Reviews"></InputTextArea>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<div class="col-sm-3">
+								<span>Стоимость</span>
+							</div>
+							<div class="col-sm-9">
+								<InputNumber @bind-Value="service.Cost"></InputNumber>
+								<ValidationMessage For="()=>service.Cost"/>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<div class="col-sm-3">
+								<span>ID партнера</span>
+							</div>
+							<div class="col-sm-9">
+								<InputNumber @bind-Value="service.PartnerId"></InputNumber>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<div class="col-sm-3">
+								<span>Тип услуги</span>
+							</div>
+							<div class="col-sm-9">
+								<InputSelect @bind-Value="service.TypeOfSevice">
+									<option value="@ServiceType.Sightseeing">Достопримечательности</option>"
+									<option value="@ServiceType.ComplexTour">Комплексеый ТУР</option>"
+									<option value="@ServiceType.BusTrip">Автобусное путешествие</option>"
+									<option value="@ServiceType.Accommodation">Отели</option>"
+									<option value="@ServiceType.Flight">Перелет на самолете</option"
+									<option value="@ServiceType.TrainTrip">Путешествие на поезде</option>"
+								</InputSelect>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" @onclick="HideModal">Close</button>
+							<button type="submit" class="btn btn-primary">Save changes</button>
+						</div>
+					</div>
+				</EditForm>
+			</div>
+		</div>
+	</div>
+}
+@code
+{
+	[Inject]
+	ServServise ServServise { get; set; }
+	private List<ServiceOutputModel> services;
+	private List<ServiceOutputModel> filterServices;
+
+
+	private string serchText;
+	private int serchType;
+	private bool isModalShowed;
+	public ServiceInputModel service;
+	private List<OrderInputModel> orders;
+
+
+	protected override void OnInitialized()
+	{
+		services = ServServise.GetAll();
+		filterServices = services;
+		serchText = "";
+		serchType = -1;
+		isModalShowed = false;
+
+		orders = new List<OrderInputModel>();
+	}
+
+	private void OnFilter()
+	{
+		string srch = serchText.Trim().ToLower();
+		filterServices = services.Where(s => s.Name.ToLower().Contains(srch)).ToList();
+
+		if (serchType != -1)
+		{
+			filterServices = filterServices.Where(s=>s.TypeOfSevice == (ServiceType)serchType).ToList();
+		}
+
+		StateHasChanged();
+	}
+
+	private void ShowModal()
+	{
+		service = new ServiceInputModel()
+		{
+			TypeOfSevice = ServiceType.ComplexTour
+		};
+
+		isModalShowed = true;
+	}
+
+	private void HideModal()
+	{
+		isModalShowed = false;
+	}
+
+	private void OnSubmit()
+	{
+
+		var tmp = ServServise.Add(service);
+		services.Add(tmp);
+		services = services.OrderBy(s => s.Name).ToList();
+		filterServices = services;
+
+
+		HideModal();
+		StateHasChanged();
+
+	}
+
+	private void HandleReservChange(OrderInputModel order)
+	{
+		var crnt = orders.Find(o => o.ServiceId == order.ServiceId);
+		if (crnt is not null)
+		{
+			crnt.Number = order.Number;
+
+			if (crnt.Number == 0)
+			{
+				orders.Remove(crnt);
+			}
+		}
+		else
+		{
+			orders.Add(order);
+		}
+
+		StateHasChanged();
+	}
+
+}

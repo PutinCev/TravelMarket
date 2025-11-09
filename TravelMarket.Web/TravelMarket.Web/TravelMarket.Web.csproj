@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\TravelMarket.BLL\TravelMarket.BLL.csproj" />
+    <ProjectReference Include="..\..\TravelMarket.Core\TravelMarket.Core.csproj" />
+    <ProjectReference Include="..\..\TravelMarket.DAL\TravelMarket.DAL.csproj" />
+    <ProjectReference Include="..\TravelMarket.Web.Client\TravelMarket.Web.Client.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.4" />
+  </ItemGroup>
+
+</Project>

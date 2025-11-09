@@ -1,0 +1,30 @@
+﻿@page "/payment/{Id:int}"
+@inject PartnerServise PartnerServise
+
+<style>
+	.my-text {
+		color: #333333;
+		font-family: Arial, sans-serif;
+		font-size: 25px;
+		line-height: 1.5;
+		text-align: left;
+	}
+</style>
+
+<p class="my-text">
+	@partner.TermsOfPayment
+</p>
+
+
+@code {
+	[Parameter]
+	public int Id { get; set; }
+	PartnerOutputModel partner;
+	protected override void OnInitialized()
+	{
+		partner = PartnerServise.GetAll().Where(p => p.Id == Id).FirstOrDefault();
+		base.OnInitialized();
+	}
+}
+
+
