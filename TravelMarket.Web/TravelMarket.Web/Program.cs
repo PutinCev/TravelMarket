@@ -25,6 +25,9 @@ namespace TravelMarket.Web
             builder.Services.AddScoped<ServServise>();
             builder.Services.AddScoped<IPartnerRepozitory, PartnerRepository>();
             builder.Services.AddScoped<PartnerServise>();
+            builder.Services.AddScoped<IOrderRepozitory, OrderRepository>();
+            builder.Services.AddScoped<OrderService>();
+
 
 
 
