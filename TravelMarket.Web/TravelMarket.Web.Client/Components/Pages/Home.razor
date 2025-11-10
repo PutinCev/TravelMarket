@@ -32,7 +32,7 @@
 			<p></p>
 
 		}
-		<p></p>
+	<p></p>
 </div>
 <p></p>
 
@@ -130,6 +130,42 @@
 		</div>
 	</div>
 }
+
+@if (isChartShowed)
+{
+	<div class="modal show d-block" style="background: rgba(0,0,0,0.5)">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Оформить документы на услуги</h5>
+					<button type="button" class="btn-close" aria-label="Close" @onclick="HideChart"></button>
+				</div>
+				<EditForm Model="orderChart" OnValidSubmit="OnChartSubmit">
+					<DataAnnotationsValidator></DataAnnotationsValidator>
+					@* <ValidationSummary></ValidationSummary> *@
+					<div class="modal-body">
+						<div class="row mb-3">
+
+							@foreach (var o in orders)
+							{
+								<p>@o.ServiceName - @o.ServiceCost руб. </p>
+							} 
+							<h5>Сумма: @orders.Sum(o=>o.ServiceCost)</h5>
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" @onclick="HideChart">Закрыть</button>
+							<button type="submit" class="btn btn-primary">Сделать первый шаг к путешествию</button>
+						</div>
+					</div>
+				</EditForm>
+			</div>
+		</div>
+	</div>
+}
+
+
+
 @code
 {
 	[Inject]
@@ -144,6 +180,9 @@
 	public ServiceInputModel service;
 	private List<OrderInputModel> orders;
 	private bool isChartShowed;
+
+	private OrderChartInputModel orderChart;
+
 
 
 	protected override void OnInitialized()
@@ -189,6 +228,8 @@
 	private void ShowChart()
 	{
 		isChartShowed = true;
+		orderChart = new OrderChartInputModel();
+
 	}
 
 	private void HideChart()
@@ -229,6 +270,12 @@
 		}
 
 		StateHasChanged();
+	}
+
+
+	private void OnChartSubmit()
+	{
+		
 	}
 
 }
