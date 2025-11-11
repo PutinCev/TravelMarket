@@ -32,5 +32,20 @@ namespace TravelMarket.DAL
             var rezult = _dataContext.Services.Include(s=>s.Partner).Include(s => s.Orders).OrderBy(s => s.Name).ToList();
             return rezult;
         }
+
+        public ServiceDto GetAllById(int id)
+        {
+            var rezult = _dataContext.Services.FirstOrDefault(s => s.Id == id);
+            return rezult;
+        }
+
+        public List<ServiceDto> GetAllByIds(List<int> ids)
+        {
+            var rezult = _dataContext.Services.Where(s => ids.Contains(s.Id)).ToList();
+            return rezult;
+        }
+
+
+
     }
 }
