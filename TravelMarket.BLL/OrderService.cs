@@ -31,9 +31,9 @@ namespace TravelMarket.BLL
 
             foreach (var serviceDto in serviceDtos)
             {
-                var newServiceDto = order.Adapt<OrderDto>();
-                newServiceDto.Service = serviceDto;
-                //newServiceDto.Add(order);   
+                var newOrderDto = order.Adapt<OrderDto>();
+                newOrderDto.Service = serviceDto;
+                _orderRepozitory.Add(newOrderDto);   
             }
             return true;    
         }

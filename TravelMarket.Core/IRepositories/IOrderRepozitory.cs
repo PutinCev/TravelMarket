@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TravelMarket.Core.Dtos;
 
 namespace TravelMarket.Core.IRepositories
 {
-    public class IOrderRepozitory
+    public interface IOrderRepozitory
     {
+        public OrderDto Add(OrderDto order);
+
     }
 }

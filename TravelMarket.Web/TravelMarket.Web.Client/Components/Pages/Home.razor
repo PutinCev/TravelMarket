@@ -170,6 +170,8 @@
 {
 	[Inject]
 	ServServise ServServise { get; set; }
+	OrderService оrderService { get; set; }
+
 	private List<ServiceOutputModel> services;
 	private List<ServiceOutputModel> filterServices;
 
@@ -272,10 +274,12 @@
 		StateHasChanged();
 	}
 
-
 	private void OnChartSubmit()
 	{
 		
+		оrderService.Add(orderChart);
+		HideChart();
 	}
+	
 
 }
