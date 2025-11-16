@@ -145,10 +145,20 @@
 					@* <ValidationSummary></ValidationSummary> *@
 					<div class="modal-body">
 						<div class="row mb-3">
+							<div class="col-sm-3">
+								<span>Паспорт</span>
+							</div>
+							<div class="col-sm-9">
+								<InputText @bind-Value="orderChart.Passport"></InputText>
+								<ValidationMessage For="()=>orderChart.Passport" />
+							</div>
+						</div>
+
+						<div class="row mb-3">
 
 							@foreach (var o in orders)
 							{
-								<p>@o.ServiceName - @o.ServiceCost руб. </p>
+								<p>@o.ServiceName- @o.ServiceCost руб. </p>
 							} 
 							<h5>Сумма: @orders.Sum(o=>o.ServiceCost)</h5>
 
@@ -277,7 +287,7 @@
 	private void OnChartSubmit()
 	{
 		
-		оrderService.Add(orderChart);
+		оrderService.Add(orders);
 		HideChart();
 	}
 	

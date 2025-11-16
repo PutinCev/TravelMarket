@@ -22,16 +22,16 @@ namespace TravelMarket.BLL
             _serviceRepozitory = serviceRepozitory;
         }
 
-        public bool Add(OrderChartInputModel order)
+        public bool Add(List<OrderInputModel> orders)
         {
-            var ids = order.Orders.Select(o => o.Service.Id).ToList();
+            var ids = orders.Select(o => o.ServiceId).ToList();
 
             var serviceDtos = _serviceRepozitory.GetAllByIds(ids);
 
 
             foreach (var serviceDto in serviceDtos)
             {
-                var newOrderDto = order.Adapt<OrderDto>();
+                var newOrderDto = new OrderDto();
                 newOrderDto.Service = serviceDto;
                 _orderRepozitory.Add(newOrderDto);   
             }
