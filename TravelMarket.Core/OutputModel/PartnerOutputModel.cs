@@ -11,12 +11,19 @@ namespace TravelMarket.Core.OutputModel
 
     {
         public int Id { get; set; }
+
         public string? Name { get; set; }
+
         public string? Description { get; set; }
+
         public string? Reminder { get; set; }
+
         public string? Agreement { get; set; }
+
         public string? TransportationVoucher { get; set; }
+
         public string? AccommodationVoucher { get; set; }
+
         public string? TermsOfPayment { get; set; }
     }
 }

@@ -8,11 +8,16 @@ namespace TravelMarket.Core.Dtos
 {
     public class UserDto
     {
-        public int Id { get; set; } 
+        public int Id { get; set; }
+        
         public UserRole? Role { get; set; }
+
         public string? Login { get; set; }
+
         public string? Password { get; set; }
+
         public PartnerDto? Partner { get; set; }
+
         public List<OrderDto>? Orders { get; set; } = new List<OrderDto>();
     }
 }

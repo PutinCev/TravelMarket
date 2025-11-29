@@ -10,9 +10,13 @@ namespace TravelMarket.Core.OutputModel
     public class OrderOutputModel
     {
         public int Id { get; set; }
+
         public DateTime? DateTime { get; set; }
+
         public UserOutputModel Client { get; set; }
+
         public ServiceOutputModel Service { get; set; }
+
         public decimal ServiceCost { get; set; }
 
     }

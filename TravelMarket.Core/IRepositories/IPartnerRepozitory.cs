@@ -10,6 +10,7 @@ namespace TravelMarket.Core.IRepositories
     public interface IPartnerRepozitory
     {
         public List<PartnerDto> GetAll();
+
         public PartnerDto GetById(int id);
     }
 }

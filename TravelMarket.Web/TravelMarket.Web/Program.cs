@@ -4,6 +4,8 @@ using Mapster;
 using TravelMarket.Core.IRepositories;
 using TravelMarket.BLL;
 using TravelMarket.DAL;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
 
 namespace TravelMarket.Web
 {
@@ -28,14 +30,23 @@ namespace TravelMarket.Web
             builder.Services.AddScoped<IOrderRepozitory, OrderRepository>();
             builder.Services.AddScoped<OrderService>();
 
-
-
-
             TypeAdapterConfig.GlobalSettings.Apply(new MapsterConfig());
             builder.Services.AddMapster();
 
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(
+                options =>
+                {
+                    options.Cookie.Name = "auth_token";
+                    options.LoginPath = "/login";
+                    options.Cookie.MaxAge = TimeSpan.FromMinutes(30);
+                });
 
-        var app = builder.Build();
+            builder.Services.AddAuthorization();
+            builder.Services.AddCascadingAuthenticationState();
+            builder.Services.AddHttpContextAccessor();  
+
+            var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -48,8 +59,11 @@ namespace TravelMarket.Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseAntiforgery();
 

@@ -44,8 +44,5 @@ namespace TravelMarket.DAL
             var rezult = _dataContext.Services.Where(s => ids.Contains(s.Id)).ToList();
             return rezult;
         }
-
-
-
     }
 }

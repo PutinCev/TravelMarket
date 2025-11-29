@@ -1,16 +1,26 @@
 ﻿@page "/"
 @rendermode InteractiveServer
+
+<AuthrizeView Roles="Client">
+	<Authrized>
+		<p>ClientClientClient</p>
+	</Authrized>
+	<NotAuthrized>
+		<p>Нужно залогиниться</p>
+	</NotAuthrized>
+</AuthrizeView>
+
 <PageTitle>Home</PageTitle>
 <div class="container" style="margin:15px;">
 	<InputText @bind-Value="serchText"> </InputText>
 	<InputSelect @bind-Value="serchType">
 		<option value=-1>Всё</option>"
-		<option value="@((int)ServiceType.Sightseeing)">Достопримечательности</option>"
-		<option value="@((int)ServiceType.ComplexTour)">Комплексеый ТУР</option>"
-		<option value="@((int)ServiceType.BusTrip)">Автобусное путешествие</option>"
-		<option value="@((int)ServiceType.Accommodation)">Отели</option>"
-		<option value="@((int)ServiceType.Flight)">Перелет на самолете</option"
-		<option value="@((int)ServiceType.TrainTrip)">Путешествие на поезде</option>"
+		<option value="@((int)ServiceType.Sightseeing)">Достопримечательности</option>
+		<option value="@((int)ServiceType.ComplexTour)">Комплексеый ТУР</option>
+		<option value="@((int)ServiceType.BusTrip)">Автобусное путешествие</option>
+		<option value="@((int)ServiceType.Accommodation)">Отели</option>
+		<option value="@((int)ServiceType.Flight)">Перелет на самолете</option>
+		<option value="@((int)ServiceType.TrainTrip)">Путешествие на поезде</option>
 	</InputSelect>
 	<button type="button" class="btn btn-primary btn-sm" @onclick="OnFilter">Поиск</button>
 	<button type="button" class="btn btn-primary btn-sm" @onclick="ShowModal">Добавить услугу</button>

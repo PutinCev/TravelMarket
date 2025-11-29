@@ -24,8 +24,5 @@ namespace TravelMarket.DAL
             _dataContext.SaveChanges();
             return order;
         }
-
-
-
     }
 }

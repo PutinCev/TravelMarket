@@ -14,8 +14,8 @@ namespace TravelMarket.Core.IRepositories
         public ServiceDto Add(ServiceDto service);
 
         public List<ServiceDto> GetAllByIds(List<int> ids);
-        public ServiceDto GetAllById(int id);
 
+        public ServiceDto GetAllById(int id);
 
     }
 }

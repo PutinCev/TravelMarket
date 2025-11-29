@@ -12,8 +12,7 @@ namespace TravelMarket.Core.InputModels
     {
         [Required(ErrorMessage ="Заполнение паспортных данных для заказа путевки обязательно")]
         public string Passport { get; set; }
+
         public List<OrderDto> Orders { get; set; } = new List<OrderDto>();
-
-
     }
 }

@@ -11,6 +11,7 @@
     <ProjectReference Include="..\..\TravelMarket.Core\TravelMarket.Core.csproj" />
     <ProjectReference Include="..\..\TravelMarket.DAL\TravelMarket.DAL.csproj" />
     <ProjectReference Include="..\TravelMarket.Web.Client\TravelMarket.Web.Client.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.4" />
   </ItemGroup>
 

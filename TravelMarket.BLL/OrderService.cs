@@ -12,7 +12,6 @@ namespace TravelMarket.BLL
 {
     public class OrderService
     {
-
         private IOrderRepozitory _orderRepozitory;
         private IServiceRepozitory _serviceRepozitory;
 

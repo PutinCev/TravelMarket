@@ -1,0 +1,6 @@
+@TravelMarket.API_HostAddress = http://localhost:5264
+
+GET {{TravelMarket.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

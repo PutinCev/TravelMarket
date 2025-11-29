@@ -1,0 +1,36 @@
+﻿@page "/qqq"
+@rendermode InteractiveServer
+
+<button @onclick="Set"> Сохранить куки </button>
+<button @onclick="Get"> Прочитать куки </button>
+<h1> </h1>
+
+<h3>@_text</h3>
+
+@code {
+	private string _text;
+
+	[Inject]
+	public HttpContextAccessor httpContextAccessor { get; set; }
+
+	private void Set()
+	{
+		HttpContext context = httpContextAccessor.HttpContext;
+		CookieOptions options = new CookieOptions()
+			{
+				Expires = DateTimeOffset.Now.AddHours(2),
+				Secure = true,
+
+			};
+
+		context.Response.Cookies.Append("qqq", "Мои куки",options);
+
+	}
+
+	private void Get()
+	{
+		HttpContext context = httpContextAccessor.HttpContext;
+		context.Request.Cookies.TryGetValue("qqq", out _text);
+
+	}
+}

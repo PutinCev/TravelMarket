@@ -15,6 +15,7 @@ namespace TravelMarket.DAL
     public class PartnerRepository : IPartnerRepozitory
     {
         private DataContext _dataContext;
+
         public PartnerRepository(DataContext dataContext)
         {
             _dataContext = dataContext;
@@ -31,8 +32,5 @@ namespace TravelMarket.DAL
             var rezult = _dataContext.Partners.FirstOrDefault(p => p.Id == id);
             return rezult;
         }
-
-
-
     }
 }
